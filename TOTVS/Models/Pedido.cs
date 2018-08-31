@@ -8,9 +8,9 @@ namespace TOTVS.Models
     public class Pedido
     {
         public int ID { get; set; }
-        public int Cliente_ID { get; set; }
+        public Cliente Cliente { get; set; }
         public float ValorTotal { get; set; }
-        public Produto Produto { get; set; }
+        public ICollection<Produto> Produto { get; set; }
 
     }
 }
