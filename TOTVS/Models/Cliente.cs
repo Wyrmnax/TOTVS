@@ -7,7 +7,7 @@ namespace TOTVS.Models
 {
     public class Cliente
     {
-        public int ID { get; set; }
+        public int ClienteID { get; set; }
         public string Nome { get; set; }
         public string CPF { get; set; }
 

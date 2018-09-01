@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TOTVS.Models;
 
@@ -33,7 +30,7 @@ namespace TOTVS.Controllers
             }
 
             var produto = await _context.Produto
-                .FirstOrDefaultAsync(m => m.ID == id);
+                .FirstOrDefaultAsync(m => m.ProdutoID == id);
             if (produto == null)
             {
                 return NotFound();
@@ -87,7 +84,7 @@ namespace TOTVS.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("ID,Descricao,Valor")] Produto produto)
         {
-            if (id != produto.ID)
+            if (id != produto.ProdutoID)
             {
                 return NotFound();
             }
@@ -101,7 +98,7 @@ namespace TOTVS.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ProdutoExists(produto.ID))
+                    if (!ProdutoExists(produto.ProdutoID))
                     {
                         return NotFound();
                     }
@@ -124,7 +121,7 @@ namespace TOTVS.Controllers
             }
 
             var produto = await _context.Produto
-                .FirstOrDefaultAsync(m => m.ID == id);
+                .FirstOrDefaultAsync(m => m.ProdutoID == id);
             if (produto == null)
             {
                 return NotFound();
@@ -146,7 +143,7 @@ namespace TOTVS.Controllers
 
         private bool ProdutoExists(int id)
         {
-            return _context.Produto.Any(e => e.ID == id);
+            return _context.Produto.Any(e => e.ProdutoID == id);
         }
     }
 }

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using TOTVS.Models;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace TOTVS.Models
 {
@@ -17,5 +12,28 @@ namespace TOTVS.Models
         public DbSet<TOTVS.Models.Cliente> Cliente { get; set; }
 
         public DbSet<TOTVS.Models.Produto> Produto { get; set; }
+
+        public DbSet<TOTVS.Models.Pedido> Pedido { get; set; }
+
+        public DbSet<TOTVS.Models.ProdutoPedido> ProdutoPedidos { get; set; }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+
+            modelBuilder.Entity<ProdutoPedido>()
+                .HasKey(pp => new { pp.PedidoID, pp.ProdutoID });
+
+            modelBuilder.Entity<ProdutoPedido>()
+                .HasOne(p => p.Produto)
+                .WithMany(pp => pp.ProdutoPedidos)
+                .HasForeignKey(p => p.ProdutoID);
+
+            modelBuilder.Entity<ProdutoPedido>()
+                .HasOne(p => p.Pedido)
+                .WithMany(pp => pp.ProdutoPedidos)
+                .HasForeignKey(p => p.PedidoID);
+               
+
+        }
+
     }
 }

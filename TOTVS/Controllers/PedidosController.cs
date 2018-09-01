@@ -6,22 +6,22 @@ using TOTVS.Models;
 
 namespace TOTVS.Controllers
 {
-    public class ClientesController : Controller
+    public class PedidosController : Controller
     {
         private readonly TOTVSContext _context;
 
-        public ClientesController(TOTVSContext context)
+        public PedidosController(TOTVSContext context)
         {
             _context = context;
         }
 
-        // GET: Clientes
+        // GET: Pedidos
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Cliente.ToListAsync());
+            return View(await _context.Pedido.ToListAsync());
         }
 
-        // GET: Clientes/Details/5
+        // GET: Pedidos/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -29,39 +29,39 @@ namespace TOTVS.Controllers
                 return NotFound();
             }
 
-            var cliente = await _context.Cliente
-                .FirstOrDefaultAsync(m => m.ClienteID == id);
-            if (cliente == null)
+            var pedido = await _context.Pedido
+                .FirstOrDefaultAsync(m => m.PedidoID == id);
+            if (pedido == null)
             {
                 return NotFound();
             }
 
-            return View(cliente);
+            return View(pedido);
         }
 
-        // GET: Clientes/Create
+        // GET: Pedidos/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Clientes/Create
+        // POST: Pedidos/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Nome,CPF")] Cliente cliente)
+        public async Task<IActionResult> Create([Bind("ID,ValorTotal")] Pedido pedido)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(cliente);
+                _context.Add(pedido);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(cliente);
+            return View(pedido);
         }
 
-        // GET: Clientes/Edit/5
+        // GET: Pedidos/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -69,22 +69,22 @@ namespace TOTVS.Controllers
                 return NotFound();
             }
 
-            var cliente = await _context.Cliente.FindAsync(id);
-            if (cliente == null)
+            var pedido = await _context.Pedido.FindAsync(id);
+            if (pedido == null)
             {
                 return NotFound();
             }
-            return View(cliente);
+            return View(pedido);
         }
 
-        // POST: Clientes/Edit/5
+        // POST: Pedidos/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Nome,CPF")] Cliente cliente)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,ValorTotal")] Pedido pedido)
         {
-            if (id != cliente.ClienteID)
+            if (id != pedido.PedidoID)
             {
                 return NotFound();
             }
@@ -93,12 +93,12 @@ namespace TOTVS.Controllers
             {
                 try
                 {
-                    _context.Update(cliente);
+                    _context.Update(pedido);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ClienteExists(cliente.ClienteID))
+                    if (!PedidoExists(pedido.PedidoID))
                     {
                         return NotFound();
                     }
@@ -109,10 +109,10 @@ namespace TOTVS.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(cliente);
+            return View(pedido);
         }
 
-        // GET: Clientes/Delete/5
+        // GET: Pedidos/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -120,30 +120,30 @@ namespace TOTVS.Controllers
                 return NotFound();
             }
 
-            var cliente = await _context.Cliente
-                .FirstOrDefaultAsync(m => m.ClienteID == id);
-            if (cliente == null)
+            var pedido = await _context.Pedido
+                .FirstOrDefaultAsync(m => m.PedidoID == id);
+            if (pedido == null)
             {
                 return NotFound();
             }
 
-            return View(cliente);
+            return View(pedido);
         }
 
-        // POST: Clientes/Delete/5
+        // POST: Pedidos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var cliente = await _context.Cliente.FindAsync(id);
-            _context.Cliente.Remove(cliente);
+            var pedido = await _context.Pedido.FindAsync(id);
+            _context.Pedido.Remove(pedido);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ClienteExists(int id)
+        private bool PedidoExists(int id)
         {
-            return _context.Cliente.Any(e => e.ClienteID == id);
+            return _context.Pedido.Any(e => e.PedidoID == id);
         }
     }
 }
